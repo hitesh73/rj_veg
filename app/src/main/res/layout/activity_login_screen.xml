@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.LoginScreen"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:id="@+id/imageview"
+        android:src="@drawable/strawberry2"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_gravity="center"
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:id="@+id/layoutmobile"
+        android:layout_margin="2dp"
+        android:padding="2dp"
+        android:layout_marginTop="20dp"
+        app:boxStrokeColor="#0E86D6"
+        app:hintTextColor="#0E86D6">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textmobile"
+            android:hint="Emiail"
+            android:textColorHint="#0E86D6"
+            android:drawableStart="@drawable/ic_mail"
+            android:inputType="text"/>
+
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_gravity="center"
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:id="@+id/layoutpassword"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="#0E86D6"
+        android:layout_margin="2dp"
+        android:padding="2dp"
+        app:boxStrokeColor="#0E86D6"
+        app:hintTextColor="#0E86D6">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textpassword"
+            android:hint="Password"
+            android:textColorHint="#0E86D6"
+            android:inputType="textPassword"
+            android:drawableStart="@drawable/ic_lock"
+            />
+
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/forgotpassword"
+        android:text="Forgot Password ?"
+        android:layout_marginLeft="235dp"
+        android:layout_marginTop="5dp"
+        android:padding="2dp"/>
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/loginbutton"
+        android:layout_gravity="center"
+        android:theme="@style/AppTheme.Material.BluePrimary"
+        android:layout_marginTop="5dp"
+        android:padding="2dp"
+        android:layout_margin="10dp"
+        android:text="LOGIN"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="130dp"
+            android:layout_height="1dp"
+            android:background="@color/colorPrimary"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/tv"/>
+        <TextView
+            android:id="@+id/tv"
+            android:layout_marginHorizontal="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="OR"
+            android:textColorHint="#0E86D6"/>
+        <View
+            android:layout_width="130dp"
+            android:layout_height="1dp"
+            android:background="@color/colorPrimary"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/tv"/>
+
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp">
+
+        <Button
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/facebook"
+            android:theme="@style/AppTheme.Material.BluePrimary"
+            android:layout_marginLeft="20dp"
+            android:text="Facebook"
+            android:drawableStart="@drawable/ic_facebook"/>
+
+        <Button
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/google"
+            android:theme="@style/AppTheme.Material.BluePrimary"
+            android:layout_marginLeft="80dp"
+            android:text="Google"
+            android:layout_marginTop="10dp"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textcheck"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_margin="2dp"
+        android:layout_marginTop="10dp"
+        android:padding="2dp"
+        android:text="Don't Have Account ! Click Here"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/help_it"
+        android:layout_gravity="center"
+        android:layout_margin="2dp"
+        android:layout_marginTop="10dp"
+        android:padding="2dp"
+        android:text="Need Help ?"
+        android:gravity="center"/>
+
+
+
+
+
+</LinearLayout>
+
+</ScrollView>

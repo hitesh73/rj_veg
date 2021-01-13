@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:id="@+id/frame1"
+        android:layout_margin="10dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="6dp">
+
+        <com.smarteist.autoimageslider.SliderView
+            android:id="@+id/imageSlider"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            app:sliderAnimationDuration="1000"
+            app:sliderAutoCycleDirection="back_and_forth"
+            app:sliderAutoCycleEnabled="true"
+            app:sliderIndicatorAnimationDuration="1000"
+            app:sliderIndicatorGravity="center_horizontal|bottom"
+            app:sliderIndicatorMargin="15dp"
+            app:sliderIndicatorOrientation="horizontal"
+            app:sliderIndicatorPadding="3dp"
+            app:sliderIndicatorRadius="2dp"
+            app:sliderIndicatorSelectedColor="#5A5A5A"
+            app:sliderIndicatorUnselectedColor="#FFF"
+            app:sliderScrollTimeInSec="2"
+            app:sliderStartAutoCycle="true"/>
+
+    </androidx.cardview.widget.CardView>
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal">
+
+       <androidx.cardview.widget.CardView
+           android:id="@+id/cardview"
+           android:layout_width="match_parent"
+           android:layout_height="150dp"
+           android:layout_weight="1"
+           android:layout_margin="10dp"
+           app:cardCornerRadius="10dp"
+           app:cardElevation="6dp">
+
+           <ImageView
+               android:layout_width="match_parent"
+               android:layout_height="150dp"
+               android:id="@+id/imagevw"/>
+
+           <TextView
+               android:id="@+id/textview1"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:gravity="center"
+               android:textColor="#000"
+               android:textSize="15dp"
+               android:layout_gravity="bottom"/>
+
+       </androidx.cardview.widget.CardView>
+
+       <androidx.cardview.widget.CardView
+           android:id="@+id/cardview2"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:layout_margin="10dp"
+           app:cardCornerRadius="10dp"
+           app:cardElevation="6dp">
+
+           <ImageView
+               android:layout_width="match_parent"
+               android:layout_height="150dp"
+               android:id="@+id/imagevw2"/>
+
+           <TextView
+               android:id="@+id/textview2"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:gravity="center"
+               android:textColor="#000"
+               android:textSize="15dp"
+               android:layout_gravity="bottom"/>
+
+       </androidx.cardview.widget.CardView>
+
+   </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="18sp"
+            android:id="@+id/textviewer"
+            android:textColor="#000"
+            android:textStyle="bold"
+            android:text="@string/top_selling_product"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"/>
+
+        <Button
+            android:id="@+id/btn_sellingitem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2.3"
+            android:theme="@style/AppTheme.Material.BluePrimary"
+            android:textSize="12sp"
+            android:text="@string/view_more"
+            android:textAlignment="center"/>
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rv_sellingproduct"/>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:cardCornerRadius="10dp"
+        android:visibility="gone"
+        app:cardElevation="6dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+
+            <ImageView
+                android:id="@+id/iv_favorite"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@drawable/favorite_selection"
+                android:layout_gravity="end"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="10dp"/>
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:id="@+id/iv1"/>
+
+            <TextView
+                android:id="@+id/tv"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/tv2"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"/>
+
+            <LinearLayout
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvweights"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="1dp">
+
+                <Button
+                    android:id="@+id/minusbtn"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/ic_minus_sign"
+                    android:gravity="center"
+                    android:theme="@style/AppTheme.Material.BluePrimary" />
+
+                <TextView
+                    android:id="@+id/increament"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:textColor="#0E86D6"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:background="@drawable/border_style"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:text="1"
+                    android:textColorHint="#0E86D6"/>
+
+                <Button
+                    android:id="@+id/plusbtn"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:background="@drawable/ic_add"
+                    android:theme="@style/AppTheme.Material.BluePrimary"/>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/addbtn"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="ADD"
+                android:theme="@style/AppTheme.Material.BluePrimary"/>
+
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="18sp"
+            android:id="@+id/dealoftheday"
+            android:textColor="#000"
+            android:textStyle="bold"
+            android:text="@string/deal_of_the_day"
+            android:layout_marginStart="10dp"
+            android:layout_gravity="center"/>
+
+        <Button
+            android:id="@+id/btn_dealoftheday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2.3"
+            android:theme="@style/AppTheme.Material.BluePrimary"
+            android:textSize="12sp"
+            android:text="@string/view_more"
+            android:textAlignment="center"/>
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rv_dealoftheday"/>
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:cardCornerRadius="10dp"
+        android:visibility="gone"
+        app:cardElevation="6dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+
+            <ImageView
+                android:id="@+id/iv_favorite2"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@drawable/favorite_selection"
+                android:layout_gravity="end"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="10dp"/>
+
+
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:id="@+id/iv2"/>
+
+            <TextView
+                android:id="@+id/tview"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/tview2"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"/>
+
+            <LinearLayout
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tview3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvweights2"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="1dp">
+
+                <Button
+                    android:id="@+id/minusbtn2"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/ic_minus_sign"
+                    android:gravity="center"
+                    android:theme="@style/AppTheme.Material.BluePrimary" />
+
+                <TextView
+                    android:id="@+id/increament2"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:textColor="#0E86D6"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:background="@drawable/border_style"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:text="1"
+                    android:textColorHint="#0E86D6"/>
+
+                <Button
+                    android:id="@+id/plusbtn2"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:background="@drawable/ic_add"
+                    android:theme="@style/AppTheme.Material.BluePrimary"/>
+
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/addbtn2"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="ADD"
+                android:theme="@style/AppTheme.Material.BluePrimary"/>
+
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+
+
+</LinearLayout>
+
+</androidx.core.widget.NestedScrollView>
+
+

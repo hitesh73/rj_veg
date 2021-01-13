@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "352760925161",
+    "firebase_url": "https://rj-veg.firebaseio.com",
+    "project_id": "rj-veg",
+    "storage_bucket": "rj-veg.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:352760925161:android:067d0ccf96fccf18c31978",
+        "android_client_info": {
+          "package_name": "com.example.newdemo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "352760925161-9ce3papdp7gev5hfsjm9uqqg97sffrrs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.newdemo",
+            "certificate_hash": "5592cc7849bed2eac9546a5766495effca4ac4e0"
+          }
+        },
+        {
+          "client_id": "352760925161-iek2n7djpq0uelip6rj4ckr1ia0b6bb0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCECwJL7ViGFma3qkSFFoNBvEHo8jpHzHI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "352760925161-iek2n7djpq0uelip6rj4ckr1ia0b6bb0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

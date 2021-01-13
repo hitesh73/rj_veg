@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">R J Veg</string>
+    <string name="Registration">Registration</string>
+    <string name="shopping_cart">Shopping Cart</string>
+    <string name="view_more">View More</string>
+    <string name="top_selling_product">Top Selling Product</string>
+    <string name="todo">TODO</string>
+    <string name="deal_of_the_day">Deal of the day</string>
+</resources>
