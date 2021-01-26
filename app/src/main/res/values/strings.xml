@@ -6,4 +6,16 @@
     <string name="top_selling_product">Top Selling Product</string>
     <string name="todo">TODO</string>
     <string name="deal_of_the_day">Deal of the day</string>
+<!--    <string name="mobile">Mobile</string>-->
+<!--    <string name="name">Name</string>-->
+<!--    <string name="email">Email</string>-->
+<!--    <string name="address">Address</string>-->
+<!--    <string name="pincode">Pincode</string>-->
+<!--    <string name="update">Update</string>-->
+<!--    <string name="logout">LogOut</string>-->
+<!--    <string name="email">Email</string>-->
+<!--    <string name="number">Number</string>-->
+<!--    <string name="address">Address</string>-->
+<!--    <string name="pincode">Pincode</string>-->
+<!--    <string name="notnull">notnull</string>-->
 </resources>

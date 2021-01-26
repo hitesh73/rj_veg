@@ -144,16 +144,28 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp">
 
-        <RelativeLayout
+        <TextView
+            android:id="@+id/username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp">
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textAllCaps="true"
+            android:layout_marginTop="30dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#000"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="100dp"
-                android:layout_height="150dp"
+                android:layout_height="100dp"
                 android:id="@+id/circleimage"
-                android:src="@drawable/acc_circle"
+                android:src="@drawable/use_profile_img"
+                android:layout_marginTop="30dp"
                 android:layout_centerHorizontal="true"
                 android:elevation="2dp"/>
 
@@ -178,18 +190,28 @@
                         android:layout_height="match_parent"
                         android:orientation="vertical">
 
+                        <ImageView
+                            android:id="@+id/iv_editing"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:background="@drawable/ic_edit"
+                            android:layout_gravity="end"
+                            android:layout_marginEnd="2dp"
+                            android:layout_marginTop="2dp"
+                            android:scaleType="fitCenter"/>
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:padding="7dp"
-                            android:layout_marginTop="40dp">
+                            android:layout_marginTop="2dp">
 
                             <TextView
                                 android:layout_weight="3"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Number"/>
+                                android:text="number"/>
                             <TextView
                                 android:id="@+id/number"
                                 android:layout_weight="1"
@@ -210,7 +232,7 @@
                                 android:layout_weight="3"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Address"
+                                android:text="address"
                                 android:textSize="15sp"/>
 
                             <TextView
@@ -233,7 +255,7 @@
                                 android:layout_weight="3"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Pincode"
+                                android:text="pincode"
                                 android:textSize="15sp"/>
 
                             <TextView
@@ -257,7 +279,7 @@
                                 android:layout_weight="3"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Email"
+                                android:text="email"
                                 android:textSize="15sp"/>
 
                             <TextView
@@ -308,7 +330,7 @@
             android:layout_marginRight="15dp"
             android:background="@drawable/btn_shapes"
             android:gravity="center"
-            android:text="LogOut"
+            android:text="logout"
             android:textColor="#fff"
             android:textSize="15sp"
             android:textStyle="bold"

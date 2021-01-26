@@ -1,6 +1,5 @@
 package com.example.newdemo.fragment;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,15 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.newdemo.activity.Profile_User;
 import com.example.newdemo.R;
 import com.example.newdemo.activity.LoginScreen;
 import com.example.newdemo.model.Users;
@@ -29,21 +28,22 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.auth.User;
+
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileFragment extends Fragment {
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
-    TextView textView1, textView2, textView3, textView4;
+    TextView textView1, textView2, textView3, textView4,textView5;
     Button logout;
     CircleImageView circleImageView;
-
+    ImageView editing;
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         //final TextView textView = view.findViewById(R.id.tv);
         //textView.setText("profile fragment");
@@ -53,11 +53,27 @@ public class ProfileFragment extends Fragment {
         textView2 = view.findViewById(R.id.adds);
         textView3 = view.findViewById(R.id.pincode);
         textView4 = view.findViewById(R.id.email);
+        textView5 = view.findViewById(R.id.username);
 
         logout = view.findViewById(R.id.logoutbtn);
 
         circleImageView = view.findViewById(R.id.circleimage);
 
+        editing = view.findViewById(R.id.iv_editing);
+
+        editing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),Profile_User.class);
+                intent.putExtra("mobile",textView1.getText().toString());
+                intent.putExtra("address",textView2.getText().toString());
+                intent.putExtra("pincode",textView3.getText().toString());
+                intent.putExtra("email",textView4.getText().toString());
+                intent.putExtra("name",textView5.getText().toString());
+                startActivity(intent);
+
+            }
+        });
         preferences = getActivity().getSharedPreferences("user", Context.MODE_PRIVATE);
         editor=preferences.edit();
 
@@ -76,6 +92,7 @@ public class ProfileFragment extends Fragment {
                                     textView2.setText(user.address);
                                     textView3.setText(user.pincode);
                                     textView4.setText(user.email);
+                                    textView5.setText(user.name);
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
@@ -91,6 +108,8 @@ public class ProfileFragment extends Fragment {
                     }
                 });
 
+
+
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,10 +124,8 @@ public class ProfileFragment extends Fragment {
         circleImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
             }
         });
-
 
         return view;
 

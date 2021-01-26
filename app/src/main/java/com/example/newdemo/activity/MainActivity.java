@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         String address=addresstext.getText().toString().trim();
         String checked;
 
-        if (mobile.isEmpty()||email.length()<10){
+        if (mobile.isEmpty()||mobile.length()<10){
             mobiletext.setError("enter valid number please", Drawable.createFromPath("ic_phone.xml"));
             mobiletext.requestFocus();
             return;

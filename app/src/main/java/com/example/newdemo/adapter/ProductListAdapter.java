@@ -18,7 +18,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.newdemo.R;
+import com.example.newdemo.activity.HomeActivity;
 import com.example.newdemo.activity.MainActivity;
+import com.example.newdemo.fragment.HomeFragment;
 import com.example.newdemo.model.ProductItem;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -50,6 +52,7 @@ public class ProductListAdapter extends FirestoreRecyclerAdapter<ProductItem, Pr
         holder.textView3.setText(model.getProductPrice());
         holder.textView4.setText(model.getProductWeight());
         Glide.with(context).load(model.getProductImage()).into(holder.imageView);
+//        holder.favoritebtn.setImageResource(R.drawable.ic_liked);
 
 
         holder.plusbtn.setOnClickListener(new View.OnClickListener() {
@@ -87,36 +90,42 @@ public class ProductListAdapter extends FirestoreRecyclerAdapter<ProductItem, Pr
 
 
         holder.favoritebtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    if (holder.favoritebtn.getBackground() == context.getDrawable(R.drawable.ic_favorite))
-                    {
-                        Toast.makeText(context, "adding to favorite", Toast.LENGTH_SHORT).show();
-                        addProductToFavorite(model);}
-                    if (holder.favoritebtn.getBackground() == context.getDrawable(R.drawable.ic_liked))
-                        removeProductFromFavorite(model);
-
-//                    FirebaseFirestore.getInstance().collection("USERS").document("rahul@gmail.com")
-//                            .collection("FAVORITE").whereEqualTo("productId", model.getProductId())
-//                            .addSnapshotListener(new EventListener<QuerySnapshot>() {
-//                                @Override
-//                                public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-//                                    if (value != null && !value.isEmpty()) {
-//                                        if (value.getDocuments().get(0).exists()) {
-//                                            removeProductFromFavorite(model);
-//                                        } else
-//                                            addProductToFavorite(model);
-//                                    }
-//                                    if (error != null) {
-//                                        Toast.makeText(context, "" + error.getMessage(), Toast.LENGTH_LONG).show();
-//                                    }
+            @Override
+            public void onClick(View v) {
 //
-//                                }
+//                    if (holder.favoritebtn.getBackground() == context.getDrawable(R.drawable.ic_favorite))
+//                    {
+//                        holder.favoritebtn.setImageResource(R.drawable.ic_liked);
+//                        Toast.makeText(context, "adding to favorite", Toast.LENGTH_SHORT).show();
+//                        addProductToFavorite(model);
+//                    }
+////                    if (holder.favoritebtn.getBackground() == context.getDrawable(R.drawable.ic_liked))
+//                    else{
+//                        holder.favoritebtn.setImageResource(R.drawable.ic_favorite);
+//                        removeProductFromFavorite(model);
 //
-//                            });
-                }
-            });
+                FirebaseFirestore.getInstance().collection("USERS").document("rahul@gmail.com")
+                        .collection("FAVORITE").whereEqualTo("productId", model.getProductId())
+                        .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                            @Override
+                            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                                if (value != null) {
+                                    if (!value.isEmpty()) {
+                                        if (value.getDocuments().get(0).exists()) {
+                                            removeProductFromFavorite(model);
+                                        } else
+                                            addProductToFavorite(model);
+                                    } else addProductToFavorite(model);
+                                }
+                                if (error != null) {
+                                    Toast.makeText(context, "" + error.getMessage(), Toast.LENGTH_LONG).show();
+                                }
+
+                            }
+
+                        });
+            }
+        });
 //        if (1 == model) {
 //            holder.favoritebtn.setImageResource(R.drawable.ic_favorite);
 //        }
@@ -155,7 +164,7 @@ public class ProductListAdapter extends FirestoreRecyclerAdapter<ProductItem, Pr
 
     }
 
-    private void removeProductFromFavorite(ProductItem model) {
+    private void removeProductFromFavorite(final ProductItem model) {
 
         FirebaseFirestore.getInstance().collection("USERS").document("rahul@gmail.com")
                 .collection("FAVORITE").whereEqualTo("productId", model.getProductId())
@@ -166,6 +175,7 @@ public class ProductListAdapter extends FirestoreRecyclerAdapter<ProductItem, Pr
                                              if (value != null && !value.isEmpty()) {
                                                  if (value.getDocuments().get(0).exists()) {
                                                      value.getDocuments().get(0).getReference().delete();
+                                                     Toast.makeText(context, "removing to favorite", Toast.LENGTH_SHORT).show();
                                                  }
                                              }
                                              if (error != null) {
@@ -259,19 +269,19 @@ public class ProductListAdapter extends FirestoreRecyclerAdapter<ProductItem, Pr
                             } else
                                 FirebaseFirestore.getInstance().collection("USERS")
                                         .document("rahul@gmail.com")
-                                        .collection("FAVORITE")
-                                        .add(model).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<DocumentReference> task) {
-                                        if (task.isSuccessful()) {
-                                            Toast.makeText(context, "add to favorite", Toast.LENGTH_SHORT).show();
-                                        } else {
+                                        .collection("FAVORITE").add(model)
+                                        .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<DocumentReference> task) {
+                                                if (task.isSuccessful()) {
+                                                    Toast.makeText(context, "add to favorite", Toast.LENGTH_SHORT).show();
+                                                } else {
 //                                                value.getDocuments().get(0).getReference().delete();
-                                            Toast.makeText(context, "" + task.getException(), Toast.LENGTH_SHORT).show();
-                                        }
+                                                    Toast.makeText(context, "" + task.getException(), Toast.LENGTH_SHORT).show();
+                                                }
 
-                                    }
-                                });
+                                            }
+                                        });
                         }
                         if (error != null)
                             Toast.makeText(context, "" + error.getMessage(), Toast.LENGTH_SHORT).show();
@@ -291,7 +301,7 @@ public class ProductListAdapter extends FirestoreRecyclerAdapter<ProductItem, Pr
     public class ProductViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
         TextView textView1, textView2, textView3, textView4, textView5;
-        Button plusbtn, minusbtn, addbtn,buybtn;
+        Button plusbtn, minusbtn, addbtn, buybtn;
         ImageView favoritebtn;
 
         public ProductViewHolder(@NonNull View itemView) {

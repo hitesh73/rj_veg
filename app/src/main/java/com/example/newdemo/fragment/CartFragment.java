@@ -1,5 +1,6 @@
 package com.example.newdemo.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,6 +44,14 @@ public class CartFragment extends Fragment {
         productItemList = new ArrayList<>();
 
         getAddToCart();
+//        buybtn = view.findViewById(R.id.buybtn);
+//        buybtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getActivity(),HistoryFragment.class);
+//                startActivity(intent);
+//            }
+//        });
         return view;
     }
 

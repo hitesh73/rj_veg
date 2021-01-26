@@ -14,9 +14,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.newdemo.R;
+import com.example.newdemo.activity.HomeActivity;
 import com.example.newdemo.fragment.CartFragment;
 import com.example.newdemo.fragment.HistoryFragment;
+import com.example.newdemo.model.OrderModel;
 import com.example.newdemo.model.ProductItem;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -37,6 +40,11 @@ public class CartProductList extends FirestoreRecyclerAdapter<ProductItem, CartP
 
     @Override
     protected void onBindViewHolder(@NonNull final CartViewHolder holder, int position, @NonNull final ProductItem model) {
+        holder.textView1.setText(model.getProductName());
+        holder.textView2.setText(model.getProductDescription());
+        holder.textView3.setText(model.getProductPrice());
+        holder.textView4.setText(model.getProductWeight());
+        Glide.with(context).load(model.getProductImage()).into(holder.imageView);
 
 
         holder.plusbtn.setOnClickListener(new View.OnClickListener() {
@@ -56,51 +64,90 @@ public class CartProductList extends FirestoreRecyclerAdapter<ProductItem, CartP
                     count--;
                     holder.textView5.setText(String.valueOf(count));
                 }
-
-
             }
         });
+
+
+//        addtocart(model);
+
+
         holder.buybtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addtocart(model);
-                Intent intent = new Intent(context,HistoryFragment.class);
-                v.getContext().startActivity(intent);
-
+//                Intent intent = new Intent(context,HistoryFragment.class);
+//                context.startActivity(intent);
+                String qty=holder.textView5.getText().toString();
+                addtoHistory(model,qty);
             }
         });
 
     }
 
-    private void addtocart(final ProductItem model) {
-        FirebaseFirestore.getInstance().collection("USERS").document("rahul@gmail.com")
-                .collection("CART").whereEqualTo("productId", model.getProductId())
+    private void addtoHistory(final ProductItem model, final String qty) {
+        final OrderModel order=new OrderModel();
+
+        FirebaseFirestore.getInstance().collection("USERS").document("RAHUL@GMAIL.COM")
+                .collection("ORDERS").whereEqualTo("productId", model.getProductId())
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                         if (value != null) {
                             if (!value.isEmpty()) {
                                 if (value.getDocuments().get(0).exists())
-                                    Toast.makeText(context, "Already Added ", Toast.LENGTH_SHORT).show();
-                            } else
+                                    Toast.makeText(context, "already adding", Toast.LENGTH_SHORT).show();
+                            } else {
+                                order.setProductItem(model);
+                                order.setProductQty(qty);
+                                order.setOrderStatus("PENDING");
                                 FirebaseFirestore.getInstance().collection("USERS")
                                         .document("rahul@gmail.com")
-                                        .collection("CART").add(model)
+                                        .collection("ORDERS").add(order)
                                         .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                                             @Override
                                             public void onComplete(@NonNull Task<DocumentReference> task) {
                                                 if (task.isSuccessful()) {
-                                                    Toast.makeText(context, "add to cart", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(context, "history", Toast.LENGTH_SHORT).show();
                                                 } else
                                                     Toast.makeText(context, "" + task.getException(), Toast.LENGTH_SHORT).show();
                                             }
                                         });
+                            }
                         }
                         if (error != null)
                             Toast.makeText(context, "" + error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
+
+//    private void addtocart(final ProductItem model) {
+//        FirebaseFirestore.getInstance().collection("USERS").document("rahul@gmail.com")
+//                .collection("CART").whereEqualTo("productId", model.getProductId())
+//                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+//                        if (value != null) {
+//                            if (!value.isEmpty()) {
+//                                if (value.getDocuments().get(0).exists())
+//                                    Toast.makeText(context, "Already Added ", Toast.LENGTH_SHORT).show();
+//                            } else
+//                                FirebaseFirestore.getInstance().collection("USERS")
+//                                        .document("rahul@gmail.com")
+//                                        .collection("CART").add(model)
+//                                        .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+//                                            @Override
+//                                            public void onComplete(@NonNull Task<DocumentReference> task) {
+//                                                if (task.isSuccessful()) {
+//                                                    Toast.makeText(context, "add to cart", Toast.LENGTH_SHORT).show();
+//                                                } else
+//                                                    Toast.makeText(context, "" + task.getException(), Toast.LENGTH_SHORT).show();
+//                                            }
+//                                        });
+//                        }
+//                        if (error != null)
+//                            Toast.makeText(context, "" + error.getMessage(), Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//    }
 
 
     @NonNull

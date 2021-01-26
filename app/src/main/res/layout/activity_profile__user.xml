@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_gravity="center"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/profile_mobile"
+            android:layout_margin="2dp"
+            android:padding="2dp"
+            android:layout_marginTop="20dp"
+            app:boxStrokeColor="#0E86D6"
+            app:hintTextColor="#0E86D6">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/user_phono_no"
+                android:hint="mobile"
+                android:textColorHint="#0E86D6"
+                android:drawableStart="@drawable/ic_phone"
+                android:inputType="number"/>
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_gravity="center"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/profile_name"
+            android:layout_margin="2dp"
+            android:padding="2dp"
+            app:boxStrokeColor="#0E86D6"
+            app:hintTextColor="#0E86D6">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/user_name"
+                android:hint="name"
+                android:textColorHint="#0E86D6"
+                android:inputType="text"
+                android:drawableStart="@drawable/ic_person"/>
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_gravity="center"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/profile_email"
+            android:layout_margin="2dp"
+            android:padding="2dp"
+            app:boxStrokeColor="#0E86D6"
+            app:hintTextColor="#0E86D6">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/user_email"
+                android:hint="email"
+                android:textColorHint="#0E86D6"
+                android:inputType="text"
+                android:focusable="false"
+                android:drawableStart="@drawable/ic_mail"/>
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_gravity="center"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/profile_address"
+            android:layout_margin="2dp"
+            android:padding="2dp"
+            app:boxStrokeColor="#0E86D6"
+            app:hintTextColor="#0E86D6">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/user_address"
+                android:hint="address"
+                android:textColorHint="#0E86D6"
+                android:inputType="text"
+                android:drawableStart="@drawable/ic_location_city"/>
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_gravity="center"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/profile_pincode"
+            android:layout_margin="2dp"
+            android:padding="2dp"
+            app:boxStrokeColor="#0E86D6"
+            app:hintTextColor="#0E86D6">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/user_pincode"
+                android:hint="pincode"
+                android:textColorHint="#0E86D6"
+                android:inputType="number"
+                android:drawableStart="@drawable/ic_location_city"/>
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+<!--        <Spinner-->
+<!--            android:id="@+id/user_pincode"-->
+<!--            android:layout_width="350dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:padding="2dp"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_margin="2dp"-->
+<!--            android:contextClickable="true"/>-->
+
+        <Button
+            android:id="@+id/profile_update"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.Material.BluePrimary"
+            android:text="update"
+            android:background="@drawable/btn_shapes"
+            android:layout_gravity="center"
+            android:padding="10dp"
+            android:layout_margin="10dp"
+            />
+
+    </LinearLayout>
+
+
+</ScrollView>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.newdemo">
 
@@ -12,9 +11,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Material"
         tools:replace="android:label">
+        <activity android:name=".activity.Profile_User"></activity>
         <activity
             android:name=".activity.VegetableActivity"
-            android:label="Vegetables"></activity>
+            android:label="Vegetables" />
         <activity
             android:name=".activity.FruitsActivity"
             android:label="Fruits" />
@@ -28,8 +28,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.ForgotPassword" />
-        <activity android:name=".activity.HomeActivity"
-            android:label="RJ Veg"/>
+        <activity
+            android:name=".activity.HomeActivity"
+            android:label="RJ Veg" />
         <activity android:name=".activity.LoginScreen" />
         <activity android:name=".activity.MainActivity" />
     </application>
