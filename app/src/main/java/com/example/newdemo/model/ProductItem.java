@@ -5,7 +5,20 @@ public class ProductItem {
     String ProductDescription;
     String ProductImage;
     String ProductPrice;
-    String productId,productDiscount,topSelling,dealOfTheDay;
+    String productId;
+    String productDiscount;
+    String topSelling;
+    String dealOfTheDay;
+    String favProductId;
+
+    public String getFavProductId() {
+        return favProductId;
+    }
+
+    public void setFavProductId(String favProductId) {
+        this.favProductId = favProductId;
+    }
+
 
     public String getProductId() {
         return productId;

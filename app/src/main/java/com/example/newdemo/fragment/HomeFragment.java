@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.newdemo.R;
 import com.example.newdemo.activity.FruitsActivity;
+import com.example.newdemo.activity.TopSellingProduct;
 import com.example.newdemo.activity.VegetableActivity;
 import com.example.newdemo.adapter.ProductListAdapter;
 import com.example.newdemo.adapter.RecyclerAdapterItem;
@@ -98,7 +99,8 @@ public class HomeFragment extends Fragment {
         topsellingbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+//                Intent intent = new Intent(getActivity(), TopSellingProduct.class);
+//                startActivity(intent);
             }
         });
 
@@ -117,6 +119,8 @@ public class HomeFragment extends Fragment {
         getFruitsImage();
         getTopSellingProducts();
         getDealOfTheDay();
+
+
         //FrameLayout frameLayout = view.findViewById(R.id.frame1);
         //frameLayout.setBackgroundColor(getResources().getColor(R.color.red));
 
@@ -157,6 +161,8 @@ public class HomeFragment extends Fragment {
         productListAdapterDeal=new ProductListAdapter(getActivity(),firestoreRecyclerOptions);
         recyclerViewdeal.setAdapter(productListAdapterDeal);
         recyclerViewdeal.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+
+
 
     }
 

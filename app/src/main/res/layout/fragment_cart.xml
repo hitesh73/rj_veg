@@ -1,30 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    android:id="@+id/frame4"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/frame4">
+    android:orientation="vertical">
 
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_addcart"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/rv_addcart"/>
+        android:layout_height="match_parent"
+        android:layout_above="@+id/ll"
+        android:layout_alignParentTop="true" />
 
-    <androidx.cardview.widget.CardView
+    <!--<androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        app:cardCornerRadius="10dp"
         android:visibility="gone"
+        app:cardCornerRadius="10dp"
         app:cardElevation="6dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_gravity="center"
+            android:gravity="center"
             android:orientation="vertical">
 
 
@@ -32,28 +34,28 @@
                 android:id="@+id/iv_favorite"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:background="@drawable/favorite_selection"
                 android:layout_gravity="end"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginTop="10dp"/>
+                android:background="@drawable/favorite_selection" />
 
             <ImageView
+                android:id="@+id/iv1"
                 android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:id="@+id/iv1"/>
+                android:layout_height="100dp" />
 
             <TextView
                 android:id="@+id/tv"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv2"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:gravity="center"/>
+                android:gravity="center" />
 
             <LinearLayout
                 android:layout_width="150dp"
@@ -70,9 +72,9 @@
 
                 <TextView
                     android:id="@+id/tvweights"
-                    android:layout_weight="1"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
             </LinearLayout>
 
             <LinearLayout
@@ -94,48 +96,76 @@
                     android:id="@+id/increament"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:textColor="#0E86D6"
                     android:layout_gravity="center"
-                    android:gravity="center"
-                    android:background="@drawable/border_style"
-                    android:layout_marginRight="15dp"
                     android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/border_style"
+                    android:gravity="center"
                     android:text="1"
-                    android:textColorHint="#0E86D6"/>
+                    android:textColor="#0E86D6"
+                    android:textColorHint="#0E86D6" />
 
                 <Button
                     android:id="@+id/plusbtn"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:gravity="center"
                     android:layout_gravity="center"
                     android:background="@drawable/ic_add"
-                    android:theme="@style/AppTheme.Material.BluePrimary"/>
+                    android:gravity="center"
+                    android:theme="@style/AppTheme.Material.BluePrimary" />
 
 
             </LinearLayout>
-
-<!--            <Button-->
-<!--                android:id="@+id/addbtn"-->
-<!--                android:layout_width="150dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="ADD"-->
-<!--                android:theme="@style/AppTheme.Material.BluePrimary"/>-->
-
 
             <Button
                 android:id="@+id/buybtn"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:text="BUY"
-                android:theme="@style/AppTheme.Material.BluePrimary"/>
+                android:theme="@style/AppTheme.Material.BluePrimary" />
 
         </LinearLayout>
 
 
     </androidx.cardview.widget.CardView>
+-->
+
+    <!--    <com.google.android.material.navigation.NavigationView-->
+    <!--        android:id="@+id/nav_view"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content">-->
+
+    <LinearLayout
+        android:id="@+id/ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:id="@+id/grandTotsl"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            android:background="#fff"
+            android:gravity="center"
+            android:textColor="#000" />
+
+        <TextView
+            android:id="@+id/placeOrder"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:background="#0E86D6"
+            android:gravity="center"
+            android:text="PLACE ORDER"
+            android:textColor="#fff" />
+
+    </LinearLayout>
+
+    <!--    </com.google.android.material.navigation.NavigationView>-->
 
 
-
-
-</LinearLayout>
+</RelativeLayout>

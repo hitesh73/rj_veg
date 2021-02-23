@@ -6,15 +6,19 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import com.example.newdemo.R;
+import com.example.newdemo.adapter.ProductListAdapter;
 import com.example.newdemo.adapter.RecyclerAdapterItem;
 import com.example.newdemo.model.ProductItem;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -23,6 +27,8 @@ import java.util.List;
 public class FruitsActivity extends AppCompatActivity {
     List<ProductItem> productItemList;
     RecyclerView recyclerView;
+    ProductListAdapter productListAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,8 +36,9 @@ public class FruitsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         recyclerView=findViewById(R.id.recyclerview);
         productItemList=new ArrayList<>();
+        getFavProductsItems();
 
-        FirebaseFirestore.getInstance().collection("FRUITS").document("fruits").collection("PRODUCTS")
+  FirebaseFirestore.getInstance().collection("FRUITS").document("fruits").collection("PRODUCTS")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -41,16 +48,36 @@ public class FruitsActivity extends AppCompatActivity {
                                 productItemList.add(productItem);
                             }
 
-                            RecyclerAdapterItem recyclerAdapterItem = new RecyclerAdapterItem(FruitsActivity.this,productItemList);
-                            recyclerView.setAdapter(recyclerAdapterItem);
-                            recyclerView.setLayoutManager(new GridLayoutManager(FruitsActivity.this,2));
                         }
                         if (error != null) {
                             Toast.makeText(FruitsActivity.this, ""+error.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
+    }
 
+    private void getFavProductsItems() {
+
+        Query query=FirebaseFirestore.getInstance().collection("USERS").document("rahul@gmail.com")
+                .collection("FAVORITE");
+
+        FirestoreRecyclerOptions firestoreRecyclerOptions= new FirestoreRecyclerOptions.Builder<ProductItem>().setQuery(query,ProductItem.class).build();
+
+        productListAdapter = new ProductListAdapter(this,firestoreRecyclerOptions);
+        recyclerView.setAdapter(productListAdapter);
+        recyclerView.setLayoutManager(new GridLayoutManager(FruitsActivity.this,2));
+    }
+
+    @Override
+    protected void onStart() {
+        productListAdapter.startListening();
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        productListAdapter.stopListening();
+        super.onStop();
     }
 
     @Override

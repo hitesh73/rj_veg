@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-
     <item
         android:id="@+id/action_home"
         android:title="Home"
@@ -24,4 +23,5 @@
         android:id="@+id/action_profile"
         android:title="Profile"
         android:icon="@drawable/ic_perm_identity"/>
+
 </menu>

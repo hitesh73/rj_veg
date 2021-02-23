@@ -1,17 +1,18 @@
 package com.example.newdemo.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class OrderModel {
-    private List<ProductItem> productItem;
+public class CartModel implements Serializable {
+    private ProductItem productItem;
     String orderStatus;
     String productQty;
 
-    public List<ProductItem> getProductItem() {
+    public ProductItem getProductItem() {
         return productItem;
     }
 
-    public void setProductItem(List<ProductItem> productItem) {
+    public void setProductItem(ProductItem productItem) {
         this.productItem = productItem;
     }
 
@@ -40,4 +41,5 @@ public class OrderModel {
     public void setProductQty(String productQty) {
         this.productQty = productQty;
     }
+
 }

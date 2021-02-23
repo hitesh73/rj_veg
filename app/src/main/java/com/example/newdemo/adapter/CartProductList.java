@@ -1,7 +1,6 @@
 package com.example.newdemo.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.newdemo.R;
-import com.example.newdemo.activity.HomeActivity;
-import com.example.newdemo.fragment.CartFragment;
-import com.example.newdemo.fragment.HistoryFragment;
+import com.example.newdemo.model.CartModel;
 import com.example.newdemo.model.OrderModel;
-import com.example.newdemo.model.ProductItem;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -31,21 +27,34 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
-public class CartProductList extends FirestoreRecyclerAdapter<ProductItem, CartProductList.CartViewHolder> {
+import java.util.HashMap;
+import java.util.Map;
+
+public class CartProductList extends FirestoreRecyclerAdapter<CartModel, CartProductList.CartViewHolder> {
     Context context;
-    public CartProductList(Context context, @NonNull FirestoreRecyclerOptions<ProductItem> options) {
+    boolean isDeleted=false;
+
+    public CartProductList(Context context,@NonNull FirestoreRecyclerOptions<CartModel> options) {
         super(options);
         this.context = context;
     }
 
-    @Override
-    protected void onBindViewHolder(@NonNull final CartViewHolder holder, int position, @NonNull final ProductItem model) {
-        holder.textView1.setText(model.getProductName());
-        holder.textView2.setText(model.getProductDescription());
-        holder.textView3.setText(model.getProductPrice());
-        holder.textView4.setText(model.getProductWeight());
-        Glide.with(context).load(model.getProductImage()).into(holder.imageView);
+//    public CartProductList(Context context, @NonNull FirestoreRecyclerOptions<OrderModel> options) {
+//        super(options);
+//        this.context = context;
+//    }
 
+    @Override
+    protected void onBindViewHolder(@NonNull final CartViewHolder holder, int position, @NonNull final CartModel cartModel) {
+        holder.textView1.setText(cartModel.getProductItem().getProductName());
+        holder.textView2.setText(cartModel.getProductItem().getProductDescription());
+        holder.textView3.setText(cartModel.getProductItem().getProductPrice());
+        holder.textView4.setText(cartModel.getProductItem().getProductWeight());
+        Glide.with(context).load(cartModel.getProductItem().getProductImage()).into(holder.imageView);
+
+
+
+        holder.textView5.setText(cartModel.getProductQty());
 
         holder.plusbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,6 +62,8 @@ public class CartProductList extends FirestoreRecyclerAdapter<ProductItem, CartP
                 int count = Integer.parseInt(holder.textView5.getText().toString());
                 count++;
                 holder.textView5.setText(String.valueOf(count));
+                updateCartHistory(cartModel,holder.textView5.getText().toString());
+
             }
         });
         holder.minusbtn.setOnClickListener(new View.OnClickListener() {
@@ -63,31 +74,92 @@ public class CartProductList extends FirestoreRecyclerAdapter<ProductItem, CartP
                 if (count > 1) {
                     count--;
                     holder.textView5.setText(String.valueOf(count));
+                    updateCartHistory(cartModel,holder.textView5.getText().toString());
+
                 }
             }
         });
 
-
-//        addtocart(model);
-
-
-        holder.buybtn.setOnClickListener(new View.OnClickListener() {
+        holder.deletedimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(context,HistoryFragment.class);
-//                context.startActivity(intent);
-                String qty=holder.textView5.getText().toString();
-                addtoHistory(model,qty);
+                isDeleted=false;
+                deleteProduct(cartModel);
             }
         });
 
+
+
+
+
+//        holder.buybtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(context,HistoryFragment.class);
+//                context.startActivity(intent);
+//                String qty=holder.textView5.getText().toString();
+//                addtoHistory(orderModel,qty);
+//            }
+//        });
+
     }
 
-    private void addtoHistory(final ProductItem model, final String qty) {
-        final OrderModel order=new OrderModel();
+    private void deleteProduct(CartModel cartModel) {
+        if (!isDeleted) {
+            FirebaseFirestore.getInstance().collection("USERS").document("rahul@gmail.com").collection("CART")
+                    .whereEqualTo("cartProductId", cartModel.getCartProductId()).addSnapshotListener(new EventListener<QuerySnapshot>() {
+                @Override
+                public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                    if (value != null && !value.isEmpty()) {
+                        value.getDocuments().get(0).getReference().delete();
+                        isDeleted=true;
+                    }
+                }
+            });
+        }
+    }
 
+    private void updateCartHistory(CartModel orderModel, String qty) {
+        final Map<String,Object> map=new HashMap<>();
+        map.put("productQty",qty);
+        FirebaseFirestore.getInstance().collection("USERS").document("rahul@gmail.com").collection("CART")
+                .whereEqualTo("productItem",orderModel.getProductItem())
+//                .document("DNPaVOFfqhL8hhZBEyRN").update(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+//            @Override
+//            public void onComplete(@NonNull Task<Void> task) {
+//                if (task.isSuccessful()){
+//                    Toast.makeText(context, "update cart", Toast.LENGTH_SHORT).show();
+//                    map.clear();
+//                }else
+//                    Toast.makeText(context, ""+task.getException(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (value!=null &&!value.isEmpty()) {
+                            value.getDocuments().get(0).getReference().update(map)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()){
+                                                Toast.makeText(context, "update cart", Toast.LENGTH_SHORT).show();
+                                                map.clear();
+                                            }else
+                                                Toast.makeText(context, ""+task.getException(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                        }if (error!=null){
+                            Toast.makeText(context, ""+error.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+
+    private void addtoHistory(final CartModel cartModel, final String qty) {
         FirebaseFirestore.getInstance().collection("USERS").document("RAHUL@GMAIL.COM")
-                .collection("ORDERS").whereEqualTo("productId", model.getProductId())
+                .collection("ORDERS").whereEqualTo("productId", cartModel.getProductItem().getProductId())
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -96,17 +168,17 @@ public class CartProductList extends FirestoreRecyclerAdapter<ProductItem, CartP
                                 if (value.getDocuments().get(0).exists())
                                     Toast.makeText(context, "already adding", Toast.LENGTH_SHORT).show();
                             } else {
-                                order.setProductItem(model);
-                                order.setProductQty(qty);
-                                order.setOrderStatus("PENDING");
+                                cartModel.setOrderStatus("Pending");
                                 FirebaseFirestore.getInstance().collection("USERS")
                                         .document("rahul@gmail.com")
-                                        .collection("ORDERS").add(order)
+                                        .collection("ORDERS").add(cartModel)
                                         .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                                             @Override
                                             public void onComplete(@NonNull Task<DocumentReference> task) {
                                                 if (task.isSuccessful()) {
                                                     Toast.makeText(context, "history", Toast.LENGTH_SHORT).show();
+                                                    FirebaseFirestore.getInstance().collection("USERS").document("rahul@gmail.com")
+                                                            .collection("CART").document(cartModel.getCartProductId()).delete();
                                                 } else
                                                     Toast.makeText(context, "" + task.getException(), Toast.LENGTH_SHORT).show();
                                             }
@@ -119,35 +191,7 @@ public class CartProductList extends FirestoreRecyclerAdapter<ProductItem, CartP
                 });
     }
 
-//    private void addtocart(final ProductItem model) {
-//        FirebaseFirestore.getInstance().collection("USERS").document("rahul@gmail.com")
-//                .collection("CART").whereEqualTo("productId", model.getProductId())
-//                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-//                        if (value != null) {
-//                            if (!value.isEmpty()) {
-//                                if (value.getDocuments().get(0).exists())
-//                                    Toast.makeText(context, "Already Added ", Toast.LENGTH_SHORT).show();
-//                            } else
-//                                FirebaseFirestore.getInstance().collection("USERS")
-//                                        .document("rahul@gmail.com")
-//                                        .collection("CART").add(model)
-//                                        .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-//                                            @Override
-//                                            public void onComplete(@NonNull Task<DocumentReference> task) {
-//                                                if (task.isSuccessful()) {
-//                                                    Toast.makeText(context, "add to cart", Toast.LENGTH_SHORT).show();
-//                                                } else
-//                                                    Toast.makeText(context, "" + task.getException(), Toast.LENGTH_SHORT).show();
-//                                            }
-//                                        });
-//                        }
-//                        if (error != null)
-//                            Toast.makeText(context, "" + error.getMessage(), Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//    }
+
 
 
     @NonNull
@@ -158,13 +202,11 @@ public class CartProductList extends FirestoreRecyclerAdapter<ProductItem, CartP
     }
 
     public static class CartViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageView;
-        TextView textView1, textView2, textView3, textView4, textView5;
-        Button plusbtn, minusbtn,buybtn;
-        ImageView favoritebtn;
+        ImageView imageView,deletedimage;
+        TextView textView1, textView2, textView3, textView4, textView5,granfTotal,placeOrder;
+        Button plusbtn, minusbtn;
         public CartViewHolder(@NonNull View itemView) {
             super(itemView);
-            favoritebtn = itemView.findViewById(R.id.iv_favorite);
             imageView = itemView.findViewById(R.id.iv1);
             textView1 = itemView.findViewById(R.id.tv);
             textView2 = itemView.findViewById(R.id.tv2);
@@ -173,7 +215,9 @@ public class CartProductList extends FirestoreRecyclerAdapter<ProductItem, CartP
             textView5 = itemView.findViewById(R.id.increament);
             plusbtn = itemView.findViewById(R.id.plusbtn);
             minusbtn = itemView.findViewById(R.id.minusbtn);
-            buybtn = itemView.findViewById(R.id.buybtn);
+            deletedimage = itemView.findViewById(R.id.iv_deleting);
+            granfTotal = itemView.findViewById(R.id.grandTotsl);
+            placeOrder = itemView.findViewById(R.id.placeOrder);
         }
 
     }

@@ -41,5 +41,6 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
     implementation "androidx.recyclerview:recyclerview:1.1.0"
 
+    implementation 'com.payumoney.sdkui:plug-n-play:1.6.0'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 }

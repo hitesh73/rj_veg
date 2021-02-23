@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.newdemo.R;
+import com.example.newdemo.adapter.FavoritesProductList;
 import com.example.newdemo.adapter.ProductListAdapter;
 import com.example.newdemo.model.ProductItem;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -26,6 +27,7 @@ import java.util.List;
 public class FavoriteFragment extends Fragment {
     List<ProductItem> productItemList;
     RecyclerView favrecyclerView;
+    FavoritesProductList favoritesProductList;
     ProductListAdapter productListAdapter;
 
 
@@ -53,8 +55,8 @@ public class FavoriteFragment extends Fragment {
 
         FirestoreRecyclerOptions firestoreRecyclerOptions= new FirestoreRecyclerOptions.Builder<ProductItem>().setQuery(query,ProductItem.class).build();
 
-        productListAdapter= new ProductListAdapter(getActivity(),firestoreRecyclerOptions);
-        favrecyclerView.setAdapter(productListAdapter);
+        favoritesProductList= new FavoritesProductList(getActivity(),firestoreRecyclerOptions);
+        favrecyclerView.setAdapter(favoritesProductList);
         favrecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
 
     }
@@ -62,12 +64,12 @@ public class FavoriteFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        productListAdapter.startListening();
+        favoritesProductList.startListening();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        productListAdapter.stopListening();
+        favoritesProductList.stopListening();
     }
 }

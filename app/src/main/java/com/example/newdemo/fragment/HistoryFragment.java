@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.newdemo.R;
 import com.example.newdemo.adapter.CartProductList;
 import com.example.newdemo.adapter.OrderProductList;
+import com.example.newdemo.model.CartModel;
 import com.example.newdemo.model.OrderModel;
 import com.example.newdemo.model.ProductItem;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -28,7 +29,7 @@ import java.util.List;
 public class HistoryFragment extends Fragment {
 
 
-    List<OrderModel> orderModels;
+    List<CartModel> orderModels;
     RecyclerView rv_history;
     OrderProductList historyViewHolder;
 
@@ -51,7 +52,7 @@ public class HistoryFragment extends Fragment {
         Query query= FirebaseFirestore.getInstance().collection("USERS").document("rahul@gmail.com")
                 .collection("ORDERS");
 
-        FirestoreRecyclerOptions firestoreRecyclerOptions= new FirestoreRecyclerOptions.Builder<OrderModel>().setQuery(query,OrderModel.class).build();
+        FirestoreRecyclerOptions firestoreRecyclerOptions= new FirestoreRecyclerOptions.Builder<CartModel>().setQuery(query, CartModel.class).build();
 
         historyViewHolder= new OrderProductList(getActivity(),firestoreRecyclerOptions);
         rv_history.setAdapter(historyViewHolder);
