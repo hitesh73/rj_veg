@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.newdemo.activity.PlaceOrder;
 import com.example.newdemo.activity.Profile_User;
 import com.example.newdemo.R;
 import com.example.newdemo.activity.LoginScreen;
@@ -61,17 +62,17 @@ public class ProfileFragment extends Fragment {
 
         editing = view.findViewById(R.id.iv_editing);
 
+
         editing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),Profile_User.class);
+                Intent intent = new Intent(getContext(), Profile_User.class);
                 intent.putExtra("mobile",textView1.getText().toString());
                 intent.putExtra("address",textView2.getText().toString());
                 intent.putExtra("pincode",textView3.getText().toString());
                 intent.putExtra("email",textView4.getText().toString());
                 intent.putExtra("name",textView5.getText().toString());
                 startActivity(intent);
-
             }
         });
         preferences = getActivity().getSharedPreferences("user", Context.MODE_PRIVATE);
@@ -128,7 +129,6 @@ public class ProfileFragment extends Fragment {
         });
 
         return view;
-
 
     }
 

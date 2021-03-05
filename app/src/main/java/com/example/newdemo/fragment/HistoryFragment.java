@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,9 +30,12 @@ import java.util.List;
 public class HistoryFragment extends Fragment {
 
 
-    List<CartModel> orderModels;
+    List<OrderModel> orderModels;
+    List<CartModel> cartModels;
     RecyclerView rv_history;
     OrderProductList historyViewHolder;
+
+
 
     @Nullable
     @Override
@@ -44,6 +48,7 @@ public class HistoryFragment extends Fragment {
 
         rv_history = view.findViewById(R.id.rv_history);
         orderModels = new ArrayList<>();
+        cartModels = new ArrayList<>();
         AddToHistory();
         return view;
     }
@@ -52,7 +57,7 @@ public class HistoryFragment extends Fragment {
         Query query= FirebaseFirestore.getInstance().collection("USERS").document("rahul@gmail.com")
                 .collection("ORDERS");
 
-        FirestoreRecyclerOptions firestoreRecyclerOptions= new FirestoreRecyclerOptions.Builder<CartModel>().setQuery(query, CartModel.class).build();
+        FirestoreRecyclerOptions firestoreRecyclerOptions= new FirestoreRecyclerOptions.Builder<OrderModel>().setQuery(query, OrderModel.class).build();
 
         historyViewHolder= new OrderProductList(getActivity(),firestoreRecyclerOptions);
         rv_history.setAdapter(historyViewHolder);

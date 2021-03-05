@@ -1,12 +1,15 @@
 package com.example.newdemo.fragment;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,31 +18,42 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.newdemo.R;
+import com.example.newdemo.activity.OrderHistoryDetails;
 import com.example.newdemo.activity.PaymentActivity;
+import com.example.newdemo.activity.PlaceOrder;
 import com.example.newdemo.adapter.CartProductList;
 import com.example.newdemo.model.CartModel;
 import com.example.newdemo.model.OrderModel;
 import com.example.newdemo.model.ProductItem;
+import com.example.newdemo.model.Users;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class CartFragment extends Fragment {
 
-    List<ProductItem> productItemList;
+    List<ProductItem> productItemList=new ArrayList<>();
     List<CartModel> cartList;
     RecyclerView rv_cart;
     TextView tvTotal, placeOrder;
     CartProductList cartViewHolder;
-    Button buybtn;
-    String cartTotal;
+//    Button buybtn;
+    String cartTotal,UserAddress,UserName,UserMobile;
 
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
 
     @Nullable
     @Override
@@ -58,13 +72,36 @@ public class CartFragment extends Fragment {
         getAddToCart();
         getCartTotal();
 
+        preferences = getActivity().getSharedPreferences("user", Context.MODE_PRIVATE);
+        editor = preferences.edit();
+
+
 
         placeOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), PaymentActivity.class);
 
+                OrderModel orderModel=new OrderModel();
+                orderModel.setOrderStatus("Pending");
+                orderModel.setCartModels(cartList);
+                orderModel.setOrderId("");
+                Date date = new Date();
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(date);
+                orderModel.setTimestamp(date);
+
+
+//                Intent intent = new Intent(getActivity(), PaymentActivity.class);
+                Intent intent = new Intent(getActivity(), PlaceOrder.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("order",orderModel);
+                intent.putExtras(bundle);
                 intent.putExtra("total",cartTotal);
+                intent.putExtra("user_address",UserAddress);
+                intent.putExtra("user_name",UserName);
+                intent.putExtra("user_mobile",UserMobile);
+//                intent.putExtra("order",orderModel);
+
                 startActivity(intent);
             }
         });
@@ -76,6 +113,36 @@ public class CartFragment extends Fragment {
 //                startActivity(intent);
 //            }
 //        });
+
+        FirebaseFirestore.getInstance().collection("USERS")
+                .whereEqualTo("email", preferences.getString("email", ""))
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable final FirebaseFirestoreException error) {
+                        if (value != null) {
+                            value.getDocuments().get(0).getReference().get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                @Override
+                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                    Users users = documentSnapshot.toObject(Users.class);
+
+                                    UserAddress = users.address;
+                                    UserName = users.name;
+                                    UserMobile = users.mobile;
+
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+
+                                }
+                            });
+                        }
+                        if (error != null) {
+                            Toast.makeText(getActivity(), "" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
         return view;
     }
 
@@ -95,6 +162,7 @@ public class CartFragment extends Fragment {
                         total += price * qty;
                         tvTotal.setText(String.valueOf("₹." + total));
                         cartTotal=String.valueOf(total);
+                        productItemList.add(cartList.get(i).getProductItem());
                     }
 
                 }else

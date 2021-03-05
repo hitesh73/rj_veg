@@ -258,7 +258,6 @@ public class ProductListAdapter extends FirestoreRecyclerAdapter<ProductItem, Pr
                             } else {
                                 cartModel.setProductItem(model);
                                 cartModel.setProductQty(qty);
-                                cartModel.setOrderStatus("");
                                 FirebaseFirestore.getInstance().collection("USERS")
                                         .document("rahul@gmail.com")
                                         .collection("CART").add(cartModel)

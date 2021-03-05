@@ -1,6 +1,8 @@
 package com.example.newdemo.model;
 
-public class ProductItem {
+import java.io.Serializable;
+
+public class ProductItem implements Serializable {
     String ProductName;
     String ProductDescription;
     String ProductImage;

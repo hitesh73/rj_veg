@@ -7,20 +7,29 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.newdemo.R;
+import com.example.newdemo.model.CartModel;
 import com.example.newdemo.model.OrderModel;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.payumoney.core.PayUmoneySdkInitializer;
 import com.payumoney.core.entity.TransactionResponse;
 import com.payumoney.sdkui.ui.utils.PayUmoneyFlowManager;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PaymentActivity extends AppCompatActivity {
     String key = "UGtwZvo3";
@@ -32,8 +41,9 @@ public class PaymentActivity extends AppCompatActivity {
     String salt = "zgmv9DfRyi";
     String merchantId = "7386353";
     String serverCalculatedHash;
-    String userMobile;
+    String userEmail;
     OrderModel orderModel;
+    CartModel cartModel;
     SharedPreferences preferences;
     private static final String TAG = "PaymentActivity";
 
@@ -42,8 +52,8 @@ public class PaymentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         amount = getIntent().getStringExtra("total");
-        preferences = getSharedPreferences("User", 0);
-        userMobile = preferences.getString("mobiletext", "");
+        preferences = getSharedPreferences("user", MODE_PRIVATE);
+        userEmail = preferences.getString("email", "");
         orderModel = (OrderModel) getIntent().getSerializableExtra("order");
         String hashSequence = key + "|" + txnid + "|" + amount + "|" + productinfo + "|" + firstname + "|" + email + "|||||||||||" + salt;
         serverCalculatedHash = hashCal("SHA-512", hashSequence);
@@ -68,7 +78,7 @@ public class PaymentActivity extends AppCompatActivity {
                 .setUdf8("")
                 .setUdf9("")
                 .setUdf10("")
-                .setIsDebug(false)                              // Integration environment - true (Debug)/ false(Production)
+                .setIsDebug(true)                              // Integration environment - true (Debug)/ false(Production)
                 .setKey(key)                        // Merchant key
                 .setMerchantId(merchantId);
 
@@ -121,11 +131,33 @@ public class PaymentActivity extends AppCompatActivity {
             if (transactionResponse != null && transactionResponse.getPayuResponse() != null) {
 
                 if (transactionResponse.getTransactionStatus().equals(TransactionResponse.TransactionStatus.SUCCESSFUL)) {
-                    FirebaseFirestore.getInstance().collection("USERS").document(userMobile).collection("ORDERS")
+                    orderModel.setOrderTotal(amount);
+                    orderModel.setTimestamp(null);
+                    FirebaseFirestore.getInstance().collection("USERS").document(userEmail).collection("ORDERS")
                             .add(orderModel).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                         @Override
                         public void onComplete(@NonNull Task<DocumentReference> task) {
                             if (task.isSuccessful()) {
+                                task.addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                    @Override
+                                    public void onSuccess(DocumentReference documentReference) {
+                                        final Map<String, Object> orderMap = new HashMap<>();
+                                        orderMap.put("orderId", documentReference.getId());
+                                        documentReference.update(orderMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                clearProducts();
+                                                orderMap.clear();
+                                                Toast.makeText(PaymentActivity.this, "", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(PaymentActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
                                 Toast.makeText(PaymentActivity.this, "Order Successful", Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(PaymentActivity.this, "" + task.getException(), Toast.LENGTH_SHORT).show();
@@ -145,5 +177,18 @@ public class PaymentActivity extends AppCompatActivity {
                 Log.d(TAG, "Both objects are null!");
             }
         }
+    }
+
+    private void clearProducts() {
+        FirebaseFirestore.getInstance().collection("USERS").document("rahul@gmail.com").collection("CART")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (value!=null && !value.isEmpty()){
+                            value.getDocuments().get(0).getReference().delete();
+                        }
+                    }
+                });
+
     }
 }

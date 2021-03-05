@@ -36,9 +36,8 @@ public class FruitsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         recyclerView=findViewById(R.id.recyclerview);
         productItemList=new ArrayList<>();
-        getFavProductsItems();
 
-  FirebaseFirestore.getInstance().collection("FRUITS").document("fruits").collection("PRODUCTS")
+   FirebaseFirestore.getInstance().collection("FRUITS").document("fruits").collection("PRODUCTS")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -48,6 +47,10 @@ public class FruitsActivity extends AppCompatActivity {
                                 productItemList.add(productItem);
                             }
 
+                            RecyclerAdapterItem recyclerAdapterItem = new RecyclerAdapterItem(FruitsActivity.this,productItemList);
+                            recyclerView.setAdapter(recyclerAdapterItem);
+                            recyclerView.setLayoutManager(new GridLayoutManager(FruitsActivity.this,2));
+
                         }
                         if (error != null) {
                             Toast.makeText(FruitsActivity.this, ""+error.getMessage(), Toast.LENGTH_SHORT).show();
@@ -56,29 +59,17 @@ public class FruitsActivity extends AppCompatActivity {
                 });
     }
 
-    private void getFavProductsItems() {
-
-        Query query=FirebaseFirestore.getInstance().collection("USERS").document("rahul@gmail.com")
-                .collection("FAVORITE");
-
-        FirestoreRecyclerOptions firestoreRecyclerOptions= new FirestoreRecyclerOptions.Builder<ProductItem>().setQuery(query,ProductItem.class).build();
-
-        productListAdapter = new ProductListAdapter(this,firestoreRecyclerOptions);
-        recyclerView.setAdapter(productListAdapter);
-        recyclerView.setLayoutManager(new GridLayoutManager(FruitsActivity.this,2));
-    }
-
-    @Override
-    protected void onStart() {
-        productListAdapter.startListening();
-        super.onStart();
-    }
-
-    @Override
-    protected void onStop() {
-        productListAdapter.stopListening();
-        super.onStop();
-    }
+//    @Override
+//    protected void onStart() {
+//        productListAdapter.startListening();
+//        super.onStart();
+//    }
+//
+//    @Override
+//    protected void onStop() {
+//        productListAdapter.stopListening();
+//        super.onStop();
+//    }
 
     @Override
     public boolean onSupportNavigateUp() {

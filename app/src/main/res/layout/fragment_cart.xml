@@ -139,7 +139,8 @@
         android:id="@+id/ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        >
 
         <TextView
             android:id="@+id/grandTotsl"
@@ -150,7 +151,8 @@
             android:textStyle="bold"
             android:background="#fff"
             android:gravity="center"
-            android:textColor="#000" />
+            android:textColor="#000"
+            />
 
         <TextView
             android:id="@+id/placeOrder"

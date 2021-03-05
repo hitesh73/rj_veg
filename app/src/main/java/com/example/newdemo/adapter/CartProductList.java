@@ -39,10 +39,7 @@ public class CartProductList extends FirestoreRecyclerAdapter<CartModel, CartPro
         this.context = context;
     }
 
-//    public CartProductList(Context context, @NonNull FirestoreRecyclerOptions<OrderModel> options) {
-//        super(options);
-//        this.context = context;
-//    }
+
 
     @Override
     protected void onBindViewHolder(@NonNull final CartViewHolder holder, int position, @NonNull final CartModel cartModel) {
@@ -168,7 +165,6 @@ public class CartProductList extends FirestoreRecyclerAdapter<CartModel, CartPro
                                 if (value.getDocuments().get(0).exists())
                                     Toast.makeText(context, "already adding", Toast.LENGTH_SHORT).show();
                             } else {
-                                cartModel.setOrderStatus("Pending");
                                 FirebaseFirestore.getInstance().collection("USERS")
                                         .document("rahul@gmail.com")
                                         .collection("ORDERS").add(cartModel)

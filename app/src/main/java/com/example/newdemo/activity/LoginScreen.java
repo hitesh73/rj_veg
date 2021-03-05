@@ -147,7 +147,7 @@ public class LoginScreen extends AppCompatActivity {
 
                                                                 editor = preferences.edit();
                                                                 editor.putString("email", snapshot.get("email").toString());
-                                                                editor.commit();
+                                                                editor.apply();
 
                                                                 Intent intent = new Intent(LoginScreen.this, HomeActivity.class);
                                                                 startActivity(intent);

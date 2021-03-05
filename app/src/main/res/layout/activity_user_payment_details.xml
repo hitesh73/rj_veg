@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-
-
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="201dp"
-        android:background="#0E86D6"/>
+    android:layout_height="match_parent"
+    tools:context=".activity.UserPaymentDetails">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,7 +14,7 @@
         android:layout_marginRight="20dp">
 
         <TextView
-            android:id="@+id/username"
+            android:text="Confirm Order Detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -35,15 +28,6 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:id="@+id/circleimage"
-                android:src="@drawable/use_profile_img"
-                android:layout_marginTop="30dp"
-                android:layout_centerHorizontal="true"
-                android:elevation="2dp"/>
 
             <LinearLayout
                 android:id="@+id/cerdviewlayout"
@@ -66,15 +50,17 @@
                         android:layout_height="match_parent"
                         android:orientation="vertical">
 
-                        <ImageView
-                            android:id="@+id/iv_editing"
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:background="@drawable/ic_edit"
-                            android:layout_gravity="end"
-                            android:layout_marginEnd="2dp"
-                            android:layout_marginTop="2dp"
-                            android:scaleType="fitCenter"/>
+                        <TextView
+                            android:id="@+id/cus_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="left"
+                            android:textAllCaps="true"
+                            android:layout_marginTop="30dp"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:textColor="#000"/>
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -84,10 +70,10 @@
                             android:layout_marginTop="2dp">
 
                             <TextView
-                                android:layout_weight="3"
+                                android:layout_weight="1"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="number"/>
+                                android:text="Mobile No"/>
                             <TextView
                                 android:id="@+id/number"
                                 android:layout_weight="1"
@@ -105,7 +91,7 @@
                             android:padding="7dp">
 
                             <TextView
-                                android:layout_weight="3"
+                                android:layout_weight="1"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="address"
@@ -128,7 +114,7 @@
                             android:padding="7dp">
 
                             <TextView
-                                android:layout_weight="3"
+                                android:layout_weight="1"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="pincode"
@@ -136,6 +122,29 @@
 
                             <TextView
                                 android:id="@+id/pincode"
+                                android:layout_weight="1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textSize="15sp"
+                                android:textStyle="bold"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="7dp">
+
+                            <TextView
+                                android:layout_weight="1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Date"
+                                android:textSize="15sp"/>
+
+                            <TextView
+                                android:id="@+id/date"
                                 android:layout_weight="1"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -152,14 +161,37 @@
                             android:padding="7dp">
 
                             <TextView
-                                android:layout_weight="3"
+                                android:layout_weight="1"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="email"
+                                android:text="Price"
                                 android:textSize="15sp"/>
 
                             <TextView
-                                android:id="@+id/email"
+                                android:id="@+id/price"
+                                android:layout_weight="1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textSize="15sp"
+                                android:textStyle="bold"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="7dp">
+
+                            <TextView
+                                android:layout_weight="1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Payment Method"
+                                android:textSize="15sp"/>
+
+                            <TextView
+                                android:id="@+id/pay_method"
                                 android:layout_weight="1"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -183,7 +215,7 @@
         </RelativeLayout>
 
         <Button
-            android:id="@+id/logoutbtn"
+            android:id="@+id/btn_continue"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginLeft="15dp"
@@ -191,7 +223,7 @@
             android:layout_marginRight="15dp"
             android:background="@drawable/btn_shapes"
             android:gravity="center"
-            android:text="logout"
+            android:text="CONTINUE"
             android:textColor="#fff"
             android:textSize="15sp"
             android:textStyle="bold"
@@ -199,7 +231,4 @@
 
     </LinearLayout>
 
-
-
 </RelativeLayout>
-

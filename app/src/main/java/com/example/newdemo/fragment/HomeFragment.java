@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.newdemo.R;
+import com.example.newdemo.activity.DealOfTheDay;
 import com.example.newdemo.activity.FruitsActivity;
 import com.example.newdemo.activity.TopSellingProduct;
 import com.example.newdemo.activity.VegetableActivity;
@@ -99,15 +100,16 @@ public class HomeFragment extends Fragment {
         topsellingbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(getActivity(), TopSellingProduct.class);
-//                startActivity(intent);
+                Intent intent = new Intent(getActivity(), TopSellingProduct.class);
+                startActivity(intent);
             }
         });
 
         deallingbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getActivity(), DealOfTheDay.class);
+                startActivity(intent);
             }
         });
 
@@ -154,23 +156,19 @@ public class HomeFragment extends Fragment {
 
     private void getDealOfTheDay() {
         Query query = FirebaseFirestore.getInstance().collectionGroup("PRODUCTS")
-                .whereEqualTo("dealOfTheDay","YES");
+                .whereEqualTo("dealOfTheDay","YES").limit(2);
         FirestoreRecyclerOptions firestoreRecyclerOptions= new FirestoreRecyclerOptions.Builder<ProductItem>()
                 .setQuery(query, ProductItem.class).build();
 
         productListAdapterDeal=new ProductListAdapter(getActivity(),firestoreRecyclerOptions);
         recyclerViewdeal.setAdapter(productListAdapterDeal);
         recyclerViewdeal.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-
-
-
     }
 
     private void getTopSellingProducts() {
         Query query = FirebaseFirestore.getInstance().collectionGroup("PRODUCTS")
-                .whereEqualTo("topSelling", "YES");
+                .whereEqualTo("topSelling", "YES").limit(2);
         FirestoreRecyclerOptions rvOptions = new FirestoreRecyclerOptions.Builder<ProductItem>().setQuery(query, ProductItem.class).build();
-
         productAdapter=new ProductListAdapter(getActivity(),rvOptions);
         recyclerView.setAdapter(productAdapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));

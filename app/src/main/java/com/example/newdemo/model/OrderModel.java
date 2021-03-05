@@ -1,29 +1,52 @@
 package com.example.newdemo.model;
 
+import com.google.firebase.firestore.ServerTimestamp;
+
+import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
-public class OrderModel {
-    private List<ProductItem> productItem;
+public class OrderModel  implements Serializable{
+    @ServerTimestamp
+    private Date timestamp;
+
+    public Date getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public String getOrderTotal() {
+        return orderTotal;
+    }
+
+    public void setOrderTotal(String orderTotal) {
+        this.orderTotal = orderTotal;
+    }
+
+    private String orderTotal;
+    private List<CartModel> cartModels;
     String orderStatus;
-    String productQty;
+    String orderId;
 
-    public List<ProductItem> getProductItem() {
-        return productItem;
+
+    public String getOrderId() {
+        return orderId;
     }
 
-    public void setProductItem(List<ProductItem> productItem) {
-        this.productItem = productItem;
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
     }
 
-    public String getCartProductId() {
-        return cartProductId;
+    public List<CartModel> getCartModels() {
+        return cartModels;
     }
 
-    public void setCartProductId(String cartProductId) {
-        this.cartProductId = cartProductId;
+    public void setCartModels(List<CartModel> cartModels) {
+        this.cartModels = cartModels;
     }
-
-    String cartProductId;
 
     public String getOrderStatus() {
         return orderStatus;
@@ -33,11 +56,4 @@ public class OrderModel {
         this.orderStatus = orderStatus;
     }
 
-    public String getProductQty() {
-        return productQty;
-    }
-
-    public void setProductQty(String productQty) {
-        this.productQty = productQty;
-    }
 }

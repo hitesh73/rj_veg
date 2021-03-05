@@ -201,7 +201,7 @@
         android:layout_width="330dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:background="#0E86D6"
+        android:theme="@style/AppTheme.Material.BluePrimary"
         android:text="CREATE AN ACCOUNT"
         android:textColor="#ffffff"
         android:layout_margin="2dp"

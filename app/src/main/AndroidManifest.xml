@@ -13,7 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Material"
         tools:replace="android:allowBackup">
-
+        <activity android:name=".activity.UserPaymentDetails"></activity>
+        <activity android:name=".activity.PlaceOrder" />
+        <activity android:name=".activity.OrderHistoryDetails" />
+        <activity android:name=".activity.DealOfTheDay" />
         <activity android:name=".activity.TopSellingProduct" />
         <activity android:name=".activity.Profile_User" />
         <activity

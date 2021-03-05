@@ -5,8 +5,17 @@ import java.util.List;
 
 public class CartModel implements Serializable {
     private ProductItem productItem;
-    String orderStatus;
+//    String orderStatus;
     String productQty;
+//    String orderId;
+//
+//    public String getOrderId() {
+//        return orderId;
+//    }
+//
+//    public void setOrderId(String orderId) {
+//        this.orderId = orderId;
+//    }
 
     public ProductItem getProductItem() {
         return productItem;
@@ -26,13 +35,13 @@ public class CartModel implements Serializable {
 
     String cartProductId;
 
-    public String getOrderStatus() {
-        return orderStatus;
-    }
-
-    public void setOrderStatus(String orderStatus) {
-        this.orderStatus = orderStatus;
-    }
+//    public String getOrderStatus() {
+//        return orderStatus;
+//    }
+//
+//    public void setOrderStatus(String orderStatus) {
+//        this.orderStatus = orderStatus;
+//    }
 
     public String getProductQty() {
         return productQty;

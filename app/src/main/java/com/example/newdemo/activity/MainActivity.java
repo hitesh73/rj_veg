@@ -27,7 +27,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
-    TextInputEditText mobiletext,nametext,emailtext,passtext,confirmtext,addresstext,pincodetext;
+    TextInputEditText mobiletext,UserName,emailtext,passtext,confirmtext,addresstext,pincodetext;
     CheckBox checkBox1;
     Button accountbutton;
     TextView textView1,textView2;
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mobiletext=findViewById(R.id.textmobile);
-        nametext=findViewById(R.id.textname);
+        UserName=findViewById(R.id.textname);
         emailtext=findViewById(R.id.textemail);
         passtext=findViewById(R.id.textpassword);
         confirmtext=findViewById(R.id.textconpass);
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
     private void registerUser() {
 
         String mobile=mobiletext.getText().toString().trim();
-        String name=nametext.getText().toString().trim();
+        String name=UserName.getText().toString().trim();
         String email=emailtext.getText().toString().trim();
         String password=passtext.getText().toString().trim();
         String confirmation=confirmtext.getText().toString().trim();
@@ -81,8 +81,8 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         if (name.isEmpty()){
-            nametext.setError("name is required");
-            nametext.requestFocus();
+            UserName.setError("name is required");
+            UserName.requestFocus();
             return;
         }
         if (email.isEmpty()){
@@ -126,8 +126,12 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull final Task<AuthResult> task) {
                         if (task.isSuccessful()){
-                            Users user=new Users(mobiletext.getText().toString(),nametext.getText().toString(),emailtext.getText().toString()
-                            ,passtext.getText().toString(),addresstext.getText().toString(),pincodetext.getText().toString());
+                            Users user=new Users(mobiletext.getText().toString(),
+                                    UserName.getText().toString(),
+                                    emailtext.getText().toString(),
+                                    passtext.getText().toString(),
+                                    addresstext.getText().toString(),
+                                    pincodetext.getText().toString());
 
                             FirebaseFirestore.getInstance().collection("USERS").document(user.email).set(user)
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
